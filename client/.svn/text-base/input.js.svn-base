@@ -1,0 +1,112 @@
+function toggle_chat_box() {
+	if (showing_chat) {
+		bind_keyboard();
+		$('#chat_box').hide();
+		showing_chat=false;
+	} else {
+		unbind_keyboard();
+		$('#chat_box').show();
+		showing_chat=true;		
+	}
+}
+
+function unbind_keyboard() {
+	$(window).unbind("keydown");
+	$(window).unbind("keyup");
+}
+
+function bind_keyboard() {
+	$(window).bind("keydown",function(e) {
+		switch(e.keyCode) {
+			case 37: /* left-arrow */
+				player.thrusting_left=true;
+				player.thrusting_right=false;
+			break;
+			case 38: /* up-arrow */
+				player.thrusting=true;
+			break;
+			case 39: /* right arrow */
+				player.thrusting_left=false;
+				player.thrusting_right=true;
+			break;
+			case 40: /* down arrow */
+			break;
+			case 16: /* shift */
+				
+			break;
+			case 17: /* control */
+				player.firing_secondary=true;
+			break;
+			case 32: /* space */
+				player.firing_primary=true;
+			break;
+			case 13: /* enter */
+			
+			break;
+			case 27: /* esc */
+			
+			break;
+			case 8: /* backspace */
+			
+			break;
+			case 9: /* tab */
+				$("#console").toggle();
+			break;
+			
+			case 84: /* t */
+				toggle_chat_box();
+			break;
+			case 76: /* l */
+				tryLand();
+			break;
+		}
+		
+		return false;
+	});	
+	
+	$(window).bind("keyup",function(e) {
+		switch(e.keyCode) {
+			case 37: /* left-arrow */
+				player.thrusting_left=false;
+			break;
+			case 38: /* up-arrow */
+				player.thrusting=false;
+			break;
+			case 39: /* right arrow */
+				player.thrusting_right=false;
+			break;
+			case 40: /* down arrow */
+			
+			break;
+			case 16: /* shift */
+			
+			break;
+			case 17: /* control */
+				player.firing_secondary=false;
+			break;
+			case 32: /* space */
+				player.firing_primary=false;
+			break;
+		}
+		
+		return false;
+	});
+	
+}
+
+function do_initialize_input() {
+	bind_keyboard();
+	$(window).bind("click",function(e) {
+		// TODO: Cache this shit
+		var widthConversion=WORLD_WIDTH/$("#canvas")[0].offsetWidth;
+		var heightConversion=WORLD_HEIGHT/$("#canvas")[0].offsetHeight;
+	
+		var worldX = e.pageX*widthConversion;
+		var worldY = e.pageY*heightConversion;
+		
+		highlight = planetCollide(worldX+world_x,worldY+world_y);
+		if (!highlight) {
+			highlight = shipCollide(worldX+world_x,worldY+world_y);
+		}
+	});
+}

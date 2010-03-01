@@ -1,0 +1,13 @@
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/example.html HTTP/1.1" 200 1234 0.0003
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/jquery.js HTTP/1.1" 200 100196 0.0002
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/json.js HTTP/1.1" 200 17458 0.0002
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/wayfarer.js HTTP/1.1" 200 3160 0.0005
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/network.js HTTP/1.1" 200 1801 0.0086
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/input.js HTTP/1.1" 200 1016 0.0002
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/objects.js HTTP/1.1" 200 2714 0.0002
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/world.js HTTP/1.1" 200 663 0.0002
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/display.js HTTP/1.1" 200 1287 0.0016
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/dialog.js HTTP/1.1" 200 996 0.0005
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/shuttle.png HTTP/1.1" 200 9978 0.0002
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /client/wayfarer-small.png HTTP/1.1" 200 8604 0.0003
+127.0.0.1 - - [27/Feb/2010 16:23:31] "GET /favicon.ico HTTP/1.1" 404 - 0.0001

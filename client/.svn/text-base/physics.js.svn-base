@@ -1,0 +1,47 @@
+function move_player() {
+	if (player.thrusting_left) {
+		if (player.v_rot>-5) {
+			player.v_rot-=1;
+		}
+	}
+	if (player.thrusting_right) {
+		if (player.v_rot<5) {
+			player.v_rot+=1;
+		}
+	}
+	if (player.thrusting) {
+		if (player.thrust<5) {
+			player.thrust+=1;
+		}
+	} else {
+		player.thrust=0;
+	}
+}
+
+/* This only runs as a interpolation tool, the server is *always* correct */
+function move_ships() {
+	for (var i in ships) {
+		ships[i].heading+=ships[i].v_rot;
+	
+		ships[i].v_x+=Math.sin(ships[i].heading * Math.PI / 180)*ships[i].thrust;
+		ships[i].v_y-=Math.cos(ships[i].heading * Math.PI / 180)*ships[i].thrust;
+	
+		ships[i].x+=ships[i].v_x/10;
+		ships[i].y+=ships[i].v_y/10;
+	
+		if (Math.abs(ships[i].v_x)>0) {
+			ships[i].v_x-=ships[i].v_x/DRAG;
+		}
+		if (Math.abs(ships[i].v_y)>0) {
+			ships[i].v_y-=ships[i].v_y/DRAG;
+		}
+		if (Math.abs(ships[i].v_rot)>0) {
+			ships[i].v_rot-=ships[i].v_rot/ROTATION_DRAG;
+		}
+	}
+}
+
+function scroll_world() {
+	world_x=player.x-(WORLD_WIDTH/2);
+	world_y=player.y-(WORLD_HEIGHT/2);	
+}

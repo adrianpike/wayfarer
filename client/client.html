@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<title>Wayfarer Engine POC</title>
+	
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="json.js"></script>
+	                                        
+		<script type="text/javascript" src="wayfarer.js"></script>
+		                                    
+		<script type="text/javascript" src="network.js"></script>
+		<script type="text/javascript" src="input.js"></script>
+		<script type="text/javascript" src="objects.js"></script>
+		<script type="text/javascript" src="world.js"></script>
+		<script type="text/javascript" src="display.js"></script>
+		<script type="text/javascript" src="dialog.js"></script>
+		
+		<script type='text/javascript'>
+            Wayfarer.initialize({
+                    'width' : 640,
+                    'height' : 480,
+                    'fps_counter' : true,
+                    'target_fps' : 15,
+                    'game_hz' : 20,
+						  'network_only' : true,
+						  'cleartext_passwords' : false,
+                    'host' : '192.168.0.153',
+                    'port' : '9292'
+                });
+
+            	jQuery(function() {
+                    Wayfarer.start();
+                });
+		</script>
+    </head>
+	<body>
+	</body>
+</html>

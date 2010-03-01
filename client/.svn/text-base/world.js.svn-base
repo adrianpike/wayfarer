@@ -1,0 +1,25 @@
+function tryLand() {
+	if (highlight) {
+		if (highlight.objectType=='planet') {
+			var distance_x = (player.world_x)-highlight.x;
+			var distance_y = (player.world_y)-highlight.y;
+			
+			var distance = Math.sqrt(distance_x*distance_x+distance_y*distance_y);
+			
+			if (distance<highlight.width) {
+				alert(highlight.remote_id);
+				showModal();
+			}
+		}
+	}
+}
+
+function leaveSystem() {
+	while (planets.length>1) {
+		planets.pop();
+	}
+	
+	while (ships.length>2) {
+		ships.pop(); // TODO: a better dispose.
+	}
+}

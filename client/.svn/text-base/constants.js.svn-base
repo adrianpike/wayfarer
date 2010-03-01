@@ -1,0 +1,35 @@
+var DEBUG=true;
+
+var WORLD_WIDTH=640;
+var WORLD_HEIGHT=480; // we can fuck with on the fly resolution later
+var ROTATION_DRAG=10; // smaller = faster burn
+var DRAG=30;
+var NETWORK_DELAY=200; // every Xmsecs POST the current position and GET the system's ships. lots 'o overhead in here
+
+var num_stars=20;
+
+var running=true;
+var showing_chat=false;
+
+var system_id='';
+var systen_name='';
+
+var starfield=new Array();
+var ships=new Object();
+var planets=new Array();
+var projectiles=new Array();
+var player=false;
+
+var highlight=false;
+var canvas=false;
+var canvas_context=false;
+var buffer_object=false;
+var fps_counter=false;
+
+/* Semaphores */
+var inLoop=false; // main loop
+
+var world_x=0;
+var world_y=0;
+
+var msecs_per_frame=50; /* was 50 */

@@ -1,0 +1,77 @@
+function do_initialize_network() {
+	setTimeout(net_update,1000);
+}
+
+function network_error() {
+	showAlert('There was a network error.');
+	running=false;
+}
+
+function net_update() {
+	var now = new Date();
+	var t_start = now.getTime();
+	
+	net_update_position();
+	net_update_ships();
+	
+	now = new Date();
+	var t_stop = now.getTime();
+	var msecs = t_stop-t_start;
+	var time_to_next_frame = NETWORK_DELAY-msecs;
+
+	if (time_to_next_frame<0) {
+		time_to_next_frame=NETWORK_DELAY;
+	}
+	setTimeout(net_update,time_to_next_frame);
+}
+
+function net_update_ships() {
+	try {
+		$.get('http://'+SERVER+':'+PORT+'/systems/'+system_id+'/ships', function(d) {
+			jsoned = JSON.parse(d);
+		
+			$.each(jsoned,function(key,val) {
+				ship = ships[key];
+			
+				if (!ship) {
+					var ship = new obj_object();	
+					ships[key]=ship;
+				}
+				ship.heading=val.heading;
+				ship.v_x=val.v_x;
+				ship.v_y=val.v_y;
+				if (ship==player) {
+					ship.world_x=val.x;
+					ship.world_y=val.y;
+				}
+				ship.x=val.x;
+				ship.y=val.y;
+				ship.v_rot=val.v_rot;
+			});
+		},'json');
+	} catch(e) {
+		network_error();
+	}
+}
+
+function net_update_position() {
+	data=player.toJSON();
+	try {
+		$.post('http://'+SERVER+':'+PORT+'/ships/'+player.remote_id,data,function(d){},'json');
+	} catch(e) {
+		network_error();
+	}
+}
+
+function net_send_chat() {
+	chat_val=$('#chat_box_chat').val();
+
+	try {
+		$.post('http://'+SERVER+':'+PORT+'/chats/'+player.remote_id,chat_val);
+	} catch(e) {
+		network_error();
+	}
+
+	toggle_chat_box();
+	return false;
+}

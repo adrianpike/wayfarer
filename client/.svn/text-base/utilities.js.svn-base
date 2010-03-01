@@ -1,0 +1,10 @@
+/* Utilities */
+function trace(msg) {
+	$('#tracer').prepend("<li>"+msg+"</li>");
+}
+
+function showAlert(content) {
+	$("#alert-box").html(content);
+	$("#alert-box").css({'display':'block'});
+	$("#alert-box").fadeTo("slow",1);
+}

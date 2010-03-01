@@ -1,0 +1,68 @@
+/* Objects */
+function obj_object() {
+	this.x=0;
+	this.y=0;
+	
+	this.remote_id=-1;
+	this.system_id=-1;
+	
+	this.objectType='object';
+	
+	this.heading=0;
+	this.v_rot=0;
+	
+	this.thrust=0;
+	
+	this.thrusting=false;
+	this.thrusting_left=false;
+	this.thrusting_right=false;
+	
+	this.v_x=0;
+	this.v_y=0;
+	
+	this.image=img_shuttle;
+	
+	this.width=20;
+	this.height=20;
+	
+	this.toJSON=function() {
+		return '{"remote_id":'+this.remote_id+',"x":'+this.x+', "y":'+this.y+', "v_x":'+this.v_x+', "v_y":'+this.v_y+', "heading":'+this.heading+', "v_rot":'+this.v_rot+'}';
+	}
+	
+	this.draw=function() {
+		if ((this.x<(world_x+WORLD_WIDTH)) && (this.x>world_x) && (this.y<(world_y+WORLD_HEIGHT)) && (this.y>world_y)) {
+			canvas.save();
+			canvas.translate(this.x,this.y);
+			canvas.translate(-world_x,-world_y);
+			canvas.rotate(this.heading * Math.PI / 180);
+			canvas.drawImage(this.image,-(this.width/2),-(this.height/2),this.width,this.height);
+			canvas.restore();
+		}
+	}
+}
+
+function obj_player() {
+	this.inheritFrom=obj_object;
+	this.inheritFrom();
+
+	this.objectType='player';	
+	
+	this.world_x=0;
+	this.world_y=0;
+	
+	this.radar_range=1000;
+	
+	this.toJSON=function() {
+		return '{"system_id":'+system_id+',"remote_id":'+this.remote_id+',"thrusting":'+this.thrusting+',"thrusting_left":'+this.thrusting_left+',"thrusting_right":'+this.thrusting_right+'}'
+	}
+}
+
+function obj_planet() {
+	this.inheritFrom=obj_object;
+	this.inheritFrom();
+	
+	this.objectType='planet';
+	
+	this.world_x=0;
+	this.world_y=0;
+}

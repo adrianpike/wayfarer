@@ -1,0 +1,141 @@
+var num_images=3;
+var num_images_loaded=0;
+
+function do_initialize_images() {
+	img_shuttle = new Image();   // Create new Image object
+	img_shuttle.src = 'images/ships/shuttle.png'; // Set source path
+	img_shuttle.onLoad=image_ready();
+	
+	img_moon = new Image();
+	img_moon.src = 'images/planets/moon.png';
+	img_moon.onLoad=image_ready();
+	
+	img_earth = new Image();
+	img_earth.src = 'images/planets/earth.png';
+	img_earth.onLoad=image_ready();
+}
+
+function image_ready() {num_images_loaded++;}
+
+function draw() {
+	draw_starfield();
+	draw_planets(); 
+	draw_ships();
+	draw_dashboard();
+	draw_radar();
+	draw_highlight();
+}
+
+function draw_starfield() {
+	for (var i=0;i<starfield.length;i++) {
+		canvas.save();
+		canvas.fillStyle = "white";
+		canvas.translate(-world_x,-world_y);
+		canvas.fillRect(starfield[i][0],starfield[i][1],1,1);
+		canvas.restore();
+	}
+}
+
+function draw_ships() {
+	for (var i in ships) {
+		ships[i].draw();
+	}
+}
+
+function draw_planets() {
+	for (var i=0;i<planets.length;i++) {
+		planets[i].draw();
+	}	
+}
+
+function draw_dashboard() {
+	
+}
+
+function draw_radar() {
+	canvas.strokeStyle = "rgba(0,255,0,0.4)";
+	canvas.fillStyle = "rgba(0,255,0,0.4)";
+	canvas.beginPath();
+	canvas.arc(30,30,30,0,Math.PI*2,true);
+	canvas.stroke();
+	canvas.fill();
+	
+	canvas.strokeStyle = "rgba(0,255,0,1)";
+	canvas.fillStyle = "rgba(0,255,0,1)";
+	canvas.fillRect(29,29,3,3);
+	
+	canvas.save();
+	canvas.translate(30,30);
+	for (var i in ships) {
+		if (ships[i]!=player) {
+			var x_translate=ships[i].x/100;
+			var y_translate=ships[i].y/100;
+
+			if (x_translate>0 && x_translate<60 && y_translate>0 && y_translate<60) {
+				canvas.save();
+				canvas.translate(-world_x/100,-world_y/100);
+				canvas.translate(x_translate,y_translate);
+				canvas.fillRect(0,0,1,1);
+				canvas.restore();
+			}
+		}
+	}
+	for (var i in planets) {
+		var x_translate=planets[i].x/100;
+		var y_translate=planets[i].y/100;
+		
+		if (x_translate>0 && x_translate<60 && y_translate>0 && y_translate<60) {
+			canvas.save();
+			canvas.translate(-world_x/100,-world_y/100);
+			canvas.translate(x_translate,y_translate);
+			canvas.fillRect(0,0,2,2);
+			canvas.restore();
+		}
+	}
+	canvas.restore();
+}
+
+function draw_highlight() {
+	if (highlight) {
+		canvas.save();
+		canvas.strokeStyle="green";
+		canvas.translate(-world_x,-world_y);
+		canvas.strokeRect(highlight.x-(highlight.width/2),highlight.y-(highlight.height/2),
+						highlight.height,highlight.width);
+					
+		canvas.restore();
+	}
+}
+
+function clearBuf() {
+	canvas.clearRect(0,0,WORLD_WIDTH,WORLD_HEIGHT);
+}
+
+function swapBuf() {
+	canvas_context.clearRect(0,0,WORLD_WIDTH,WORLD_HEIGHT);
+	canvas_context.drawImage(buffer_object, 0, 0);
+}
+
+function showModal() {
+	var modal = $('#modal');
+	modal.css("top","50px");
+	modal.css("right","50px");
+	modal.show('slow');
+}
+
+function hideModal() {
+	$('#modal').hide('show');
+}
+	
+function cull_starfield() {
+	for (var i=0;i<starfield.length;i++) {
+		if ((starfield[i][0]>(world_x+WORLD_WIDTH)) || (starfield[i][0]<world_x) || 
+			(starfield[i][1]>(world_y+WORLD_HEIGHT)) || (starfield[i][1]<world_y)) {
+			var x=(Math.random()*WORLD_WIDTH)+world_x;
+			var y=(Math.random()*WORLD_HEIGHT)+world_y;
+			var a=[x,y];
+			
+			starfield[i]=a;
+		}
+	}
+}
