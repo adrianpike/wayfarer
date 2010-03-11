@@ -2,14 +2,6 @@ Wayfarer.World = {};
 
 Wayfarer.World.initialize = function() {
 	Wayfarer.log("Initializing World...");
-	
-	// just for debugging
-	/*
-	Wayfarer.player.object = new Wayfarer.player_object();
-	Wayfarer.World.objects = { 1 : Wayfarer.player.object };
-	Wayfarer.World.visible_objects = { 1 : Wayfarer.player.object };
-	Wayfarer.Input.focus_keyboard(Wayfarer.player.object);
-	*/
 };
 
 Wayfarer.World.visible_objects = [];
@@ -24,7 +16,21 @@ Wayfarer.World.tick = function() {
 
 Wayfarer.World.object_at = function(x,y) {
 	Wayfarer.log('Searching for object at '+x+','+y);
+};
+
+Wayfarer.World.update_object = function(object_id, data) {
+if (Wayfarer.World.objects[object_id]) {
+	Wayfarer.World.objects[object_id].update(data);
+} else {
+	// TODO: type of object fixinate
+	obj = new Wayfarer.player_object();
+	obj.remote_id = data['game_id'];
+	obj.update(data);
+	
+	Wayfarer.World.objects[object_id] = obj;
+	Wayfarer.World.visible_objects[object_id] = obj;
 }
+};
 
 Wayfarer.World.download = function(callback) {
 	Wayfarer.log('Downloading world...');

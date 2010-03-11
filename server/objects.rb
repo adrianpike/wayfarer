@@ -65,7 +65,7 @@ module Wayfarer
 			end
 		
 			def to_json
-				'{"game_id":'+game_id.to_s+',"x":'+x.to_s+
+				'{"type":"player","game_id":'+game_id.to_s+',"x":'+x.to_s+
 				',"y":'+y.to_s+',"heading":'+heading.to_s+',"player_name":"'+login.to_s+'"}';
 			end
 		

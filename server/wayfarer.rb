@@ -52,7 +52,7 @@ module Wayfarer
 				# TODO: broken pipe, player logged out, network congestion
 				js = ''
 				@wayfarer.world.objects.each {|id,o|
-					js += "if (Wayfarer.World.objects['#{id}']) Wayfarer.World.objects['#{id}'].update(#{o.to_json});"
+					js += "Wayfarer.World.update_object('#{id}',#{o.to_json});"
 				}
 				#js = 'console.log(\'ping\');'
 				

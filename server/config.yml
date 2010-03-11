@@ -1,4 +1,2 @@
 game_hz: 30
 network_hz: 10
-cleartext_passwords: false
-game_password: 'foobar'

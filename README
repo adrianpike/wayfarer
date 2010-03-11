@@ -18,6 +18,8 @@ Wayfarer is Copyright 2010 Adrian Pike.
 
 == QUICKSTART
 
+Change line 32 of client/client.html to reflect your IP address. Make sure you use an outside IP and not localhost/127.0.0.1.
+
 $ cd server
 $ rackup wayfarer.ru
 
@@ -34,8 +36,9 @@ Fire up thy browser, and navigate to http://[YOUR IP ADDRESS]:9292. Now do it wi
 == TODO
 
 Engine:
+* Monitor latency to help reduce warping.
 * Authenticate update requests.
-* Chat capabilities
+* Chat capabilities.
 * Modularize & Refactor
 * User console
 * Documentation
